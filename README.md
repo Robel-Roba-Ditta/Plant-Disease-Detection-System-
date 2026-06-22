@@ -26,19 +26,6 @@ The system is deployed through an interactive **Streamlit web application**, all
 
 ---
 
-## 🖼️ Project Preview
-
-### Home Page
-
-![Home Page](https://via.placeholder.com/1200x600.png?text=Plant+Disease+Detection+Home+Page)
-
-### Prediction Result
-
-![Prediction Result](https://via.placeholder.com/1200x600.png?text=Prediction+Result)
-
-### Analytics Dashboard
-
-![Dashboard](https://via.placeholder.com/1200x600.png?text=Prediction+Analytics+Dashboard)
 
 ---
 
