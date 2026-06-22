@@ -287,7 +287,7 @@ Plant-Disease-Detection/
 ### Clone Repository
 
 ```bash
-git clone https://github.com/yourusername/Plant-Disease-Detection.git
+git clone https://github.com/Robel-Roba-Ditta/Plant-Disease-Detection.git
 ```
 
 ### Navigate to Project
