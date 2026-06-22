@@ -26,7 +26,7 @@ The system is deployed through an interactive **Streamlit web application**, all
 
 ---
 
-
+[**Live Demo**](https://saurabhsinghdhami-plant-disease-detection-main-app-p8d5ks.streamlit.app/)
 ---
 
 ## ✨ Features
