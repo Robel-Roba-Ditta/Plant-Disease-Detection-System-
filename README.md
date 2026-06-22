@@ -365,6 +365,6 @@ This project is developed for educational and research purposes.
 
 ### 🌿 Empowering Agriculture Through Artificial Intelligence
 
-Made with ❤️ by AASTU Software Engineering Students
+Made  by AASTU Software Engineering Students
 
 </div>
