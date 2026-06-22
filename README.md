@@ -1,100 +1,383 @@
-readme_content = """# Plant Disease Detection System
+# 🌱 Plant Disease Detection System
 
-A Hybrid Deep Learning and Tree-Based Machine Learning System for Automated Crop Disease Diagnosis.
+<div align="center">
 
-Developed as a Machine Learning Project for the Department of Software Engineering at **Addis Ababa Science & Technology University (AASTU)**.
+![Python](https://img.shields.io/badge/Python-3.10+-blue?style=for-the-badge\&logo=python)
+![TensorFlow](https://img.shields.io/badge/TensorFlow-DeepLearning-orange?style=for-the-badge\&logo=tensorflow)
+![Streamlit](https://img.shields.io/badge/Streamlit-WebApp-red?style=for-the-badge\&logo=streamlit)
+![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-RandomForest-yellow?style=for-the-badge\&logo=scikitlearn)
+![OpenCV](https://img.shields.io/badge/OpenCV-ComputerVision-green?style=for-the-badge\&logo=opencv)
 
----
+### Intelligent Plant Disease Detection Using Deep Learning & Computer Vision
 
-## 📌 Project Overview
+Detect plant diseases from leaf images using a hybrid **CNN + Random Forest** machine learning approach.
 
-Global food security faces continuous threats from plant diseases, which significantly reduce crop yield and quality. Traditional manual identification methods are labor-intensive, slow, and unavailable in remote or resource-constrained regions.
-
-This project implements an automated, scalable, and user-friendly **Plant Disease Detection System** leveraging a hybrid approach: a custom **Convolutional Neural Network (CNN)** for high-level spatial feature extraction and a **Random Forest (RF)** classifier for robust ensemble decision-making. The system is deployed via an interactive **Streamlit web application**, providing real-time diagnostic capability to farmers, students, and agronomists.
-
-### 🎯 Objectives
-* **General:** Build an automated plant disease detection system using deep learning and traditional machine learning methods trained on a massive dataset of crop leaf images.
-* **Specific:**
-    * Preprocess and normalize leaf image datasets for efficient model training.
-    * Design a custom CNN architecture to perform multi-class classification across 38 distinct crop-disease categories.
-    * Extract abstract visual feature vectors from the CNN flattening layer to train a secondary Random Forest classifier.
-    * Implement an intelligent fallback/ensemble strategy to optimize prediction accuracy.
-    * Build a responsive, bilingual (English & Amharic) user interface with webcam input and analytics tracking.
+</div>
 
 ---
 
-## 📊 Dataset Specifications
+## 📖 Overview
 
-The system is trained and validated using the **New Plant Diseases Dataset** sourced from Kaggle, a comprehensive collection of crop leaf imagery.
-* **Total Images:** Over 87,000 high-resolution RGB images.
-* **Split Ratio:** 80% Training Set (70,295 images) and 20% Validation Set (17,572 images). A manual held-out test set was used for final validation.
-* **Scope:** Covers **14 distinct crop species** (including tomato, potato, corn, grape, apple, blueberry, and orange) mapped across **38 unique classes** (healthy and diseased states).
-* **Environmental Variability:** Images include uncontrolled backgrounds, diverse lighting configurations, multi-angle leaf orientations, and varying levels of disease severity to ensure generalization in real field scenarios.
+Plant diseases are one of the major causes of crop yield loss worldwide. Early identification of plant diseases helps farmers take timely actions and prevent large-scale agricultural damage.
 
----
+This project introduces an intelligent plant disease detection system that leverages **Convolutional Neural Networks (CNNs)** and **Random Forest classifiers** to automatically identify diseases from plant leaf images.
 
-## ⚙️ Methodology & Technical Architecture
-
-### 1. Data Preprocessing
-To accelerate model convergence and handle computational limitations:
-* **Image Resizing:** Uniformly downscaled to `128x128` pixels to maintain structural features while minimizing footprint.
-* **Color Normalization:** Pixel values rescaled from `[0, 255]` to `[0, 1]` to ensure gradient stability during backpropagation.
-* **Mini-batching & Shuffling:** Handled in batches of 32 to reduce bias and foster optimal generalization across training epochs.
-
-### 2. Custom CNN Architecture
-The backbone model consists of an end-to-end deep feature extractor and classifier:
-* **Feature Extraction:** 6× Convolutional layers (`Conv2D` with `3x3` kernels) paired with Rectified Linear Unit (`ReLU`) activations for capturing complex localized spatial patterns like leaf lesions, rust spots, and chlorosis.
-* **Dimensionality Reduction:** `MaxPooling` layers inserted between convolutional blocks to condense spatial volume while preserving dominant visual metrics.
-* **Regularization:** `Dropout` layers strategically embedded to minimize overfitting.
-* **Classification Head:** Output from the convolutional pipeline is flattened into a 1,024-dimensional feature vector, fed into a dense layer (256 units), and finalized via a **Softmax layer** outputting probability distributions across all 38 classes.
-
-### 3. Hybrid Random Forest Integration
-To create an alternative decision boundary and leverage ensemble advantages:
-* **Feature Extraction Workflow:** The trained CNN is utilized as a fixed feature extractor. The 1,024-dimensional vector from the penultimate `Flatten` layer is extracted for every image.
-* **Scaling:** Extracted vectors are standardized via a `StandardScaler`.
-* **Classifier Training:** A Scikit-Learn `RandomForestClassifier` is trained on these deep feature embeddings using 100 decision trees (`criterion="gini"`).
-
-### 4. Hybrid Fallback & Ensemble Logic
-The system implements a probabilistic rule to maximize reliability:
-* **Ensemble Strategy:** Combines prediction probability vectors from both the CNN Softmax output and the Random Forest via simple averaging.
-* **Fallback Logic:** If the top-1 confidence score of the CNN falls below a set threshold (`< 70%`), the system switches decision weight or evaluates the Random Forest's structural texture features to settle edge cases. This hybrid model combination boosts effective performance on visually ambiguous leaf data.
+The system is deployed through an interactive **Streamlit web application**, allowing users to upload or capture leaf images and receive instant disease predictions with confidence scores.
 
 ---
 
-## 📈 Experimental Results & Performance
+## 🖼️ Project Preview
 
-Quantified metrics across evaluation sets demonstrate high robustness:
+### Home Page
 
-| Model Benchmark | Accuracy (%) | Precision (Macro) | Recall (Macro) | F1-Score (Macro) |
-| :--- | :---: | :---: | :---: | :---: |
-| **CNN (Softmax Classifier)** | 97.8% | 0.970 | 0.978 | 0.977 |
-| **Random Forest (CNN Features)** | 95.4% | 0.950 | 0.954 | 0.953 |
-| **Hybrid Ensemble Strategy** | **98.3%** | **0.981** | **0.983** | **0.982** |
+![Home Page](https://via.placeholder.com/1200x600.png?text=Plant+Disease+Detection+Home+Page)
 
-### Key Observations
-* **Convergence:** The CNN model demonstrated steep learning trajectories, maximizing performance with minimal training footprint and proving excellent generalization capability.
-* **Feature Separation:** The high performance of the Random Forest model (95.4% accuracy) mathematically proves that the custom CNN learns highly distinct, linear, and non-linear boundaries in the feature space.
-* **Disagreement Resolution:** CNN and RF models disagreed on approximately 4.2% of test edge cases. In instances of low-confidence CNN predictions, the Random Forest frequently predicted correctly due to its aggregation of global texture features, verifying the utility of the fallback design.
+### Prediction Result
 
----
+![Prediction Result](https://via.placeholder.com/1200x600.png?text=Prediction+Result)
 
-## 🖥️ Streamlit Web Application Features
+### Analytics Dashboard
 
-The system is deployed as an interactive, highly visual frontend designed for real-world demonstration:
-* **Dual Input Modes:** Users can instantly drag-and-drop leaf images or capture real-time live photos directly through their device's webcam.
-* **Top-K Insights:** Renders a clean bar chart visualization illustrating the Top-3 highest-confidence predicted classes.
-* **Side-by-Side Verification:** Simultaneously displays predictions from both the CNN and Random Forest models for direct comparison.
-* **Bilingual Localization:** Fully localized in **English** and **Amharic (አማርኛ)** to ensure operational accessibility for local Ethiopian farming communities and agronomists.
-* **Session Analytics Tracker:** Dynamically tracks all evaluations performed during a active session, presenting a tabular layout of past predictions with exact timestamps and allowing comprehensive **CSV Export** for historical logs.
+![Dashboard](https://via.placeholder.com/1200x600.png?text=Prediction+Analytics+Dashboard)
 
 ---
 
-## 🚀 Installation & Local Deployment
+## ✨ Features
 
-### Prerequisites
-* Python 3.8 or higher
-* Pip environment manager
+✅ Plant disease classification from leaf images
 
-### Setup Instructions
+✅ Deep Learning based CNN model
 
-1. **Clone the Repository:**
+✅ Random Forest classifier on CNN extracted features
+
+✅ Top-3 disease predictions with confidence scores
+
+✅ Real-time image upload and webcam capture
+
+✅ Prediction history tracking
+
+✅ CSV export functionality
+
+✅ Multilingual support (English & Amharic)
+
+✅ Visualization of prediction statistics
+
+✅ User-friendly Streamlit interface
+
+---
+
+## 🎯 Problem Statement
+
+Traditional disease diagnosis relies heavily on manual inspection by agricultural experts. This process can be:
+
+* Time-consuming
+* Expensive
+* Subjective
+* Difficult to access in rural areas
+
+Our solution provides an automated disease detection system capable of producing fast and accurate diagnoses using only leaf images.
+
+---
+
+## 🏗️ System Architecture
+
+```text
+Leaf Image
+     │
+     ▼
+Image Preprocessing
+     │
+     ▼
+CNN Feature Extraction
+     │
+ ┌───┴────┐
+ ▼        ▼
+CNN      Random Forest
+Prediction Prediction
+ └───┬────┘
+     ▼
+Result Analysis
+     ▼
+Streamlit Web Interface
+```
+
+---
+
+## 📊 Dataset
+
+### New Plant Diseases Dataset
+
+The project uses the widely adopted Plant Disease Dataset from Kaggle.
+
+Dataset Statistics:
+
+| Property     | Value                     |
+| ------------ | ------------------------- |
+| Total Images | 87,000+                   |
+| Classes      | 38                        |
+| Crop Types   | 14                        |
+| Image Type   | RGB                       |
+| Categories   | Healthy & Diseased Leaves |
+
+### Supported Crops
+
+* Apple
+* Blueberry
+* Cherry
+* Corn
+* Grape
+* Orange
+* Peach
+* Pepper
+* Potato
+* Raspberry
+* Soybean
+* Squash
+* Strawberry
+* Tomato
+
+Dataset Source:
+
+https://www.kaggle.com/datasets/vipoooool/new-plant-diseases-dataset
+
+---
+
+## 🧠 Machine Learning Approach
+
+### 1. Image Preprocessing
+
+* Image resizing (128×128)
+* Normalization
+* Dataset shuffling
+* Batch generation
+
+### 2. CNN Model
+
+The CNN model consists of:
+
+* Convolution Layers
+* ReLU Activation
+* Max Pooling
+* Dropout
+* Dense Layers
+* Softmax Output Layer
+
+### 3. Random Forest Model
+
+The Random Forest classifier uses:
+
+* CNN extracted feature vectors
+* StandardScaler normalization
+* 100 decision trees
+
+### 4. Hybrid Prediction
+
+The system compares:
+
+* CNN prediction
+* Random Forest prediction
+
+This hybrid approach improves reliability for difficult classification cases.
+
+---
+
+## 📈 Results
+
+| Model             | Accuracy |
+| ----------------- | -------- |
+| CNN               | 97.8%    |
+| Random Forest     | 95.4%    |
+| Ensemble Strategy | 98.3%    |
+
+### Performance Metrics
+
+| Metric    | CNN   |
+| --------- | ----- |
+| Precision | 0.97  |
+| Recall    | 0.978 |
+| F1-Score  | 0.977 |
+
+---
+
+## 🖥️ User Interface
+
+The Streamlit application provides:
+
+### Image Upload
+
+Upload leaf images directly from your device.
+
+### Webcam Capture
+
+Capture plant images in real time.
+
+### Top Predictions
+
+View:
+
+* Predicted disease
+* Confidence percentage
+* Top 3 probable diseases
+
+### Analytics
+
+* Prediction frequency charts
+* Historical prediction logs
+* CSV report download
+
+---
+
+## 🛠️ Technology Stack
+
+### Programming Language
+
+* Python
+
+### Deep Learning
+
+* TensorFlow
+* Keras
+
+### Machine Learning
+
+* Scikit-Learn
+
+### Computer Vision
+
+* OpenCV
+
+### Data Processing
+
+* NumPy
+* Pandas
+
+### Visualization
+
+* Matplotlib
+* Seaborn
+
+### Deployment
+
+* Streamlit
+
+---
+
+## 📂 Project Structure
+
+```text
+Plant-Disease-Detection/
+│
+├── dataset/
+│
+├── models/
+│   ├── cnn_model.h5
+│   ├── random_forest.pkl
+│   └── scaler.pkl
+│
+├── notebooks/
+│
+├── app/
+│   ├── app.py
+│   ├── prediction.py
+│   ├── preprocessing.py
+│   └── utils.py
+│
+├── assets/
+│   ├── screenshots/
+│   └── images/
+│
+├── requirements.txt
+│
+├── README.md
+│
+└── LICENSE
+```
+
+---
+
+## 🚀 Installation
+
+### Clone Repository
+
+```bash
+git clone https://github.com/yourusername/Plant-Disease-Detection.git
+```
+
+### Navigate to Project
+
+```bash
+cd Plant-Disease-Detection
+```
+
+### Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### Run Application
+
+```bash
+streamlit run app.py
+```
+
+---
+
+## 🔮 Future Improvements
+
+* Mobile Application Integration
+* TensorFlow Lite Deployment
+* Offline Prediction Support
+* Grad-CAM Explainability
+* Weather-Based Disease Risk Analysis
+* Farmer Feedback System
+* Cloud Deployment
+* Real-Time Field Diagnosis
+
+---
+
+## 👥 Team Members
+
+| Name            |
+| --------------- |
+| Robel Roba      |
+| Sosina Tilahun  |
+| Salim Aragaw    |
+| Sosina Ayele    |
+| Thressa Menilek |
+
+---
+
+## 🎓 Academic Information
+
+**Institution:** Addis Ababa Science and Technology University
+
+**Department:** Software Engineering
+
+**Course:** Machine Learning Project
+
+**Supervisor:** Dr. Fedlu
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome.
+
+Feel free to fork the repository, create a feature branch, and submit a pull request.
+
+---
+
+## 📜 License
+
+This project is developed for educational and research purposes.
+
+---
+
+<div align="center">
+
+### 🌿 Empowering Agriculture Through Artificial Intelligence
+
+Made with ❤️ by AASTU Software Engineering Students
+
+</div>
