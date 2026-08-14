@@ -1,0 +1,3 @@
+## 2024-08-14 - Streamlit ML Model Loading Bottleneck
+**Learning:** Loading large ML models (like TensorFlow models) directly inside a Streamlit prediction or render function causes the model to be loaded from disk synchronously on every single user interaction. This creates a massive performance bottleneck and latency in prediction.
+**Action:** Always extract heavy model loading into a separate function and decorate it with Streamlit's `@st.cache_resource`. This ensures the model is loaded into memory only once and reused across subsequent predictions and user sessions, drastically reducing latency.
