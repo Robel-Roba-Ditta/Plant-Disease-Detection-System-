@@ -1,16 +1,21 @@
 import streamlit as st
 import tensorflow as tf
 import numpy as np
+from typing import Any
 
+
+@st.cache_resource
+def load_model(model_path: str) -> tf.keras.Model:
+    return tf.keras.models.load_model(model_path)
 
 #Tensorflow Model Prediction
-def model_prediction(test_image):
-    model = tf.keras.models.load_model("trained_plant_disease_model.keras")
+def model_prediction(test_image: Any) -> int:
+    model = load_model("trained_plant_disease_model.keras")
     image = tf.keras.preprocessing.image.load_img(test_image,target_size=(128,128))
     input_arr = tf.keras.preprocessing.image.img_to_array(image)
     input_arr = np.array([input_arr]) #convert single image to batch
     predictions = model.predict(input_arr)
-    return np.argmax(predictions) #return index of max element
+    return int(np.argmax(predictions)) #return index of max element
 
 #Sidebar
 st.sidebar.title("Dashboard")
