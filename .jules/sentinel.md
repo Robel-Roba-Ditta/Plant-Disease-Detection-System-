@@ -1,0 +1,4 @@
+## 2026-08-15 - [Streamlit File Upload & Invalid State Execution]
+**Vulnerability:** Unrestricted file uploads through `st.file_uploader` and interactive buttons (Show Image, Predict) executing logic when no file was provided, causing potentially unhandled errors/invalid states leaking stack traces.
+**Learning:** In Streamlit apps, components interact globally. Missing file type restrictions can lead to users uploading malicious files (or just unexpected format files) that break image parsers, and missing disabled states on buttons can lead to invalid executions exposing internal paths/stacktraces via the default error handler if not caught defensively.
+**Prevention:** Always set `type` array on `st.file_uploader` for explicit extensions. Conditionally set `disabled=test_image is None` on downstream operational buttons. Wrap critical ML model predictions in `try-except` failing securely with generic `st.error()` messages.
