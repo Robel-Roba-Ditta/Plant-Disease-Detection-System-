@@ -1,0 +1,3 @@
+## 2024-08-15 - Streamlit State & Invalid Execution Prevention
+**Learning:** In Streamlit, UI elements like buttons remain interactable by default even if required dependencies (like an uploaded image file via `st.file_uploader`) aren't present. This can lead to unhandled backend errors or bad user experience when users click them prematurely.
+**Action:** Always use the `disabled` parameter on Streamlit interactive elements (e.g., `st.button`) based on the state of required inputs. Also restrict `st.file_uploader` extensions using the `type` parameter to prevent invalid file processing attempts and provide a `st.spinner` for long-running processes like ML model predictions to communicate that an action is running.
