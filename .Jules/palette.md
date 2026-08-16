@@ -1,0 +1,3 @@
+## 2024-03-20 - Streamlit Interactive Elements Disabled State and Feedback
+**Learning:** In Streamlit applications, user experience is significantly degraded when interactive elements (like buttons) perform actions that depend on other inputs (like a file uploader) but are not explicitly disabled when those inputs are missing. This leads to confusing error tracebacks for the user. Furthermore, long-running processes like ML model predictions appear frozen without visual feedback.
+**Action:** Always use the `disabled` parameter on Streamlit buttons when prerequisites (like `test_image is None`) are not met, restrict file upload types, and always wrap heavy synchronous operations in `st.spinner`.
