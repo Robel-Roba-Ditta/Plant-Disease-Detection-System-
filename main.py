@@ -3,11 +3,16 @@ import tensorflow as tf
 import numpy as np
 
 
+# Cache the model to prevent reloading it on every prediction, which significantly improves performance.
+@st.cache_resource
+def load_model():
+    return tf.keras.models.load_model("trained_plant_disease_model.keras")
+
 #Tensorflow Model Prediction
 def model_prediction(test_image):
-    model = tf.keras.models.load_model("trained_plant_disease_model.keras")
-    image = tf.keras.preprocessing.image.load_img(test_image,target_size=(128,128))
-    input_arr = tf.keras.preprocessing.image.img_to_array(image)
+    model = load_model()
+    image = tf.keras.utils.load_img(test_image,target_size=(128,128))
+    input_arr = tf.keras.utils.img_to_array(image)
     input_arr = np.array([input_arr]) #convert single image to batch
     predictions = model.predict(input_arr)
     return np.argmax(predictions) #return index of max element
@@ -61,14 +66,15 @@ elif(app_mode=="About"):
 #Prediction Page
 elif(app_mode=="Disease Recognition"):
     st.header("Disease Recognition")
-    test_image = st.file_uploader("Choose an Image:")
-    if(st.button("Show Image")):
+    test_image = st.file_uploader("Choose an Image:", type=["jpg", "jpeg", "png", "webp"])
+    if(st.button("Show Image", disabled=test_image is None)):
         st.image(test_image,width=4,use_column_width=True)
     #Predict button
-    if(st.button("Predict")):
+    if(st.button("Predict", disabled=test_image is None)):
         st.snow()
         st.write("Our Prediction")
-        result_index = model_prediction(test_image)
+        with st.spinner("Analyzing image..."):
+            result_index = model_prediction(test_image)
         #Reading Labels
         class_name = ['Apple___Apple_scab', 'Apple___Black_rot', 'Apple___Cedar_apple_rust', 'Apple___healthy',
                     'Blueberry___healthy', 'Cherry_(including_sour)___Powdery_mildew', 
