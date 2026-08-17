@@ -62,13 +62,14 @@ elif(app_mode=="About"):
 elif(app_mode=="Disease Recognition"):
     st.header("Disease Recognition")
     test_image = st.file_uploader("Choose an Image:")
-    if(st.button("Show Image")):
+    if(st.button("Show Image", disabled=(test_image is None))):
         st.image(test_image,width=4,use_column_width=True)
     #Predict button
-    if(st.button("Predict")):
+    if(st.button("Predict", disabled=(test_image is None))):
         st.snow()
         st.write("Our Prediction")
-        result_index = model_prediction(test_image)
+        with st.spinner("Analyzing image..."):
+            result_index = model_prediction(test_image)
         #Reading Labels
         class_name = ['Apple___Apple_scab', 'Apple___Black_rot', 'Apple___Cedar_apple_rust', 'Apple___healthy',
                     'Blueberry___healthy', 'Cherry_(including_sour)___Powdery_mildew', 
