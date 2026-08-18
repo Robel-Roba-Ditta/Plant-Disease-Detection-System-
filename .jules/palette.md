@@ -1,0 +1,3 @@
+## 2024-08-18 - Add Loading Spinner for ML Prediction
+**Learning:** Heavy synchronous ML model loading/prediction in Streamlit blocks the main thread, leaving users without feedback and potentially causing them to click multiple times or assume the app is broken.
+**Action:** Always wrap `tf.keras.models.load_model` and `model.predict` calls (or their encapsulating functions) in a `st.spinner()` block to provide immediate visual feedback during long-running operations.
