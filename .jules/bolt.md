@@ -1,0 +1,3 @@
+## 2024-05-18 - [Cache Heavy TensorFlow Model Initialization]
+**Learning:** Loading a large TensorFlow model via `tf.keras.models.load_model` synchronously inside the prediction function causes a massive bottleneck, as Streamlit re-runs the entire script on every user interaction (like clicking "Predict").
+**Action:** Use Streamlit's `@st.cache_resource` decorator on a separate model loading function to load the model only once and cache it in memory across script re-runs.
