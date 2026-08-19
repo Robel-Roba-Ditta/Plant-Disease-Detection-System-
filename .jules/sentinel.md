@@ -2,3 +2,7 @@
 **Vulnerability:** The application allowed arbitrary file uploads via `st.file_uploader` without restricting extensions, and buttons to process those files lacked checks for `None`, leading to unhandled exceptions and stack trace leaks if clicked prematurely.
 **Learning:** In Streamlit applications, failing to restrict `st.file_uploader` extensions (`type`) or leaving UI components active when their dependencies (like uploaded files) are missing can result in both malicious file execution/storage risks and unintentional data leakage through error stack traces.
 **Prevention:** Always restrict `st.file_uploader` extensions using the `type` parameter, and use the `disabled` parameter on interactive elements like `st.button` to prevent them from executing invalid states when dependencies are missing.
+## 2024-08-19 - Prevent Stack Trace Leakage during Image Prediction
+**Vulnerability:** The application was vulnerable to stack trace leakage during model prediction if processing an uploaded image encountered an unexpected error, exposing system and environment details.
+**Learning:** File processing logic and complex machine learning inference steps are prime candidates for raising unexpected runtime exceptions. Leaving these operations unhandled in user-facing frameworks like Streamlit directly exposes detailed stack traces.
+**Prevention:** Wrap user-input driven operations and predictive model calls in `try...except` blocks and return non-descriptive, generic error messages to the user (e.g., using `st.error` in Streamlit).
