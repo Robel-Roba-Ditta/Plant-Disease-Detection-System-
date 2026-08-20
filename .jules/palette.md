@@ -1,0 +1,3 @@
+## 2026-08-20 - Add loading states and modernization for Streamlit App
+**Learning:** In Streamlit apps, large async/model processes can make the UI appear frozen. `st.spinner` handles long-running processes well. Additionally, `use_column_width=True` is deprecated and can cause scaling/layout issues; `use_container_width=True` is the proper standard.
+**Action:** Always wrap prediction code blocks in `with st.spinner("...")` for immediate visual feedback and switch any legacy Streamlit layout parameters like `use_column_width` to the modern, reliable `use_container_width`.
