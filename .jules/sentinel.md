@@ -1,4 +1,4 @@
-## 2024-05-15 - Unrestricted File Upload and Stack Trace Leak in Streamlit UI
-**Vulnerability:** The application allowed arbitrary file uploads via `st.file_uploader` without restricting extensions, and buttons to process those files lacked checks for `None`, leading to unhandled exceptions and stack trace leaks if clicked prematurely.
-**Learning:** In Streamlit applications, failing to restrict `st.file_uploader` extensions (`type`) or leaving UI components active when their dependencies (like uploaded files) are missing can result in both malicious file execution/storage risks and unintentional data leakage through error stack traces.
-**Prevention:** Always restrict `st.file_uploader` extensions using the `type` parameter, and use the `disabled` parameter on interactive elements like `st.button` to prevent them from executing invalid states when dependencies are missing.
+## 2024-05-18 - Denial of Service via Model Reloading
+**Vulnerability:** The Streamlit application was reloading the TensorFlow model from disk on every user interaction (e.g., clicking "Predict"), causing slow response times and vulnerability to Denial of Service (DoS) attacks by exhausting system resources.
+**Learning:** Heavy initialization operations, such as loading large machine learning models, must be cached in Streamlit applications to prevent repeated synchronous loading.
+**Prevention:** Extracted the model loading logic into a separate function decorated with `@st.cache_resource` so that Streamlit caches the model in memory across requests, mitigating the risk of DoS.
