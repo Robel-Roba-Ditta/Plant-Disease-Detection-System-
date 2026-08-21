@@ -1,12 +1,14 @@
 import streamlit as st
+from streamlit.runtime.uploaded_file_manager import UploadedFile
 import tensorflow as tf
 import numpy as np
+from PIL import Image
 
 
 #Tensorflow Model Prediction
-def model_prediction(test_image: str) -> int:
+def model_prediction(test_image: UploadedFile) -> int:
     model = tf.keras.models.load_model("trained_plant_disease_model.keras")
-    image = tf.keras.utils.load_img(test_image,target_size=(128,128))
+    image = Image.open(test_image).convert('RGB').resize((128, 128))
     input_arr = tf.keras.utils.img_to_array(image)
     input_arr = np.array([input_arr]) #convert single image to batch
     predictions = model.predict(input_arr)
