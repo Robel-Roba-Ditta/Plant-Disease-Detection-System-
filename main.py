@@ -4,8 +4,12 @@ import numpy as np
 
 
 #Tensorflow Model Prediction
+@st.cache_resource
+def load_model():
+    return tf.keras.models.load_model("trained_plant_disease_model.keras")
+
 def model_prediction(test_image: str) -> int:
-    model = tf.keras.models.load_model("trained_plant_disease_model.keras")
+    model = load_model()
     image = tf.keras.utils.load_img(test_image,target_size=(128,128))
     input_arr = tf.keras.utils.img_to_array(image)
     input_arr = np.array([input_arr]) #convert single image to batch
