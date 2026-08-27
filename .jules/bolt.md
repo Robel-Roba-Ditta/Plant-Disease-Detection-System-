@@ -1,0 +1,3 @@
+## 2024-05-24 - Streamlit Model Caching
+**Learning:** In Streamlit applications, heavy initialization operations like loading TensorFlow models must be cached. Without caching, the model is reloaded synchronously from disk on every user interaction, blocking the main thread and severely degrading performance.
+**Action:** Always use `@st.cache_resource` for heavy dependencies (like ML models or database connections) to ensure they are loaded only once and shared across reruns.
