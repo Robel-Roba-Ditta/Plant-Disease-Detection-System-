@@ -1,0 +1,3 @@
+## 2024-08-30 - Caching Heavy Initialization in Streamlit
+**Learning:** TensorFlow models loaded directly inside prediction functions in Streamlit run synchronously on every user action (like clicking "Predict"). This creates a massive CPU and disk I/O bottleneck because the model is repeatedly loaded from disk.
+**Action:** Extract the model loading into a separate function and use Streamlit's `@st.cache_resource` decorator to maintain the model in memory across re-renders and sessions.
