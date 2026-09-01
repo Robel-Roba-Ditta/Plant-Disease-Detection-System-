@@ -1,0 +1,3 @@
+## 2024-05-23 - Streamlit Responsive Images & Loading States
+**Learning:** Streamlit's `st.image` requires `use_container_width=True` (without conflicting static `width` parameters) to ensure consistent responsive behavior. Additionally, wrapping heavy ML predictions in `st.spinner` prevents the UI from appearing frozen and provides crucial feedback for async operations.
+**Action:** Always prefer `use_container_width=True` for images, and wrap heavy operations (like TensorFlow predictions) in `st.spinner` for better UX.
