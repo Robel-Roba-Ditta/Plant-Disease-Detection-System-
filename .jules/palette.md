@@ -1,0 +1,3 @@
+## 2024-09-04 - Improve Streamlit Loading States and Image Sizing
+**Learning:** Using `st.spinner` provides critical visual feedback during long-running tasks like model loading, preventing users from thinking the application is frozen. Furthermore, using `use_container_width=True` instead of the deprecated `use_column_width=True` alongside removing conflicting static width parameters ensures consistent responsive image sizing across different devices.
+**Action:** Always wrap heavy synchronous operations (like model inference) in `st.spinner` for better UX, and prefer `use_container_width=True` for responsive `st.image` components.
