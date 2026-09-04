@@ -3,9 +3,15 @@ import tensorflow as tf
 import numpy as np
 
 
+@st.cache_resource
+def load_model():
+    # Caching the model loading significantly speeds up consecutive predictions
+    # by avoiding repeated disk I/O and initialization bottlenecks.
+    return tf.keras.models.load_model("trained_plant_disease_model.keras")
+
 #Tensorflow Model Prediction
 def model_prediction(test_image: str) -> int:
-    model = tf.keras.models.load_model("trained_plant_disease_model.keras")
+    model = load_model()
     image = tf.keras.utils.load_img(test_image,target_size=(128,128))
     input_arr = tf.keras.utils.img_to_array(image)
     input_arr = np.array([input_arr]) #convert single image to batch
