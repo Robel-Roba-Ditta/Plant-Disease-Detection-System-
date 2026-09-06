@@ -72,7 +72,8 @@ elif(app_mode=="Disease Recognition"):
             st.snow()
             st.write("Our Prediction")
             try:
-                result_index = model_prediction(test_image)
+                with st.spinner("Analyzing image..."):
+                    result_index = model_prediction(test_image)
                 #Reading Labels
                 class_name = ['Apple___Apple_scab', 'Apple___Black_rot', 'Apple___Cedar_apple_rust', 'Apple___healthy',
                             'Blueberry___healthy', 'Cherry_(including_sour)___Powdery_mildew',
