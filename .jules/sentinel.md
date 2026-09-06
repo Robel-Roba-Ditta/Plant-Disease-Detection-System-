@@ -6,4 +6,8 @@
 ## 2024-11-06 - [Defense in Depth and Error Handling in Streamlit]
 **Vulnerability:** The application was missing defense-in-depth checks for file uploads (relying solely on disabled button states) and lacked error handling around model predictions, which could lead to application crashes or stack trace leakage to the end user if processing failed.
 **Learning:** Streamlit UI state (like `disabled=True`) is not a substitute for explicit `None` checks on inputs like `st.file_uploader` within processing blocks. Furthermore, complex operations like model inference must be wrapped in `try...except` blocks to prevent sensitive internal errors from bubbling up to the user interface.
-**Prevention:** Always implement explicit `if input is not None:` checks inside action handlers before processing data, even if UI controls are conditionally disabled. Wrap potentially failing operations (like external model calls or file parsing) in `try...except` blocks, log the exception internally using `logging`, and present generic `st.error()` messages to the user.
+
+## 2026-09-06 - Add file size limit for image uploads
+**Vulnerability:** Unrestricted file upload size can lead to resource exhaustion (DoS) when processing large images.
+**Learning:** Streamlit's `file_uploader` doesn't enforce strict application-level file size validation out of the box beyond global config, allowing overly large files to reach backend processing layers.
+**Prevention:** Always implement explicit file size limits for user uploads before performing heavy operations like image decoding and model prediction.

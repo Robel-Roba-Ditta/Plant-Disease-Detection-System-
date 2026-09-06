@@ -63,12 +63,22 @@ elif(app_mode=="About"):
 elif(app_mode=="Disease Recognition"):
     st.header("Disease Recognition")
     test_image = st.file_uploader("Choose an Image:", type=['jpg', 'jpeg', 'png', 'webp'])
-    if(st.button("Show Image", disabled=(test_image is None))):
-        if test_image is not None:
+
+    # Security Enhancement: Limit file size to 5MB to prevent DoS
+    MAX_FILE_SIZE = 5 * 1024 * 1024
+    is_valid_size = True
+    if test_image is not None:
+        if test_image.size > MAX_FILE_SIZE:
+            logging.warning(f"Security: Uploaded file size ({test_image.size} bytes) exceeds the 5MB limit.")
+            st.error("File size exceeds 5MB limit. Please upload a smaller image.")
+            is_valid_size = False
+
+    if(st.button("Show Image", disabled=(test_image is None or not is_valid_size))):
+        if test_image is not None and is_valid_size:
             st.image(test_image,use_container_width=True)
     #Predict button
-    if(st.button("Predict", disabled=(test_image is None))):
-        if test_image is not None:
+    if(st.button("Predict", disabled=(test_image is None or not is_valid_size))):
+        if test_image is not None and is_valid_size:
             st.snow()
             st.write("Our Prediction")
             try:
