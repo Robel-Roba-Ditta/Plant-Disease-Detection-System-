@@ -69,6 +69,9 @@ elif(app_mode=="Disease Recognition"):
     #Predict button
     if(st.button("Predict", disabled=(test_image is None))):
         if test_image is not None:
+            if test_image.size > 5 * 1024 * 1024: # 5MB limit
+                st.error("File size exceeds 5MB limit. Please upload a smaller image.")
+                st.stop()
             st.snow()
             st.write("Our Prediction")
             try:
