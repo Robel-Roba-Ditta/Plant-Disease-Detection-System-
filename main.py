@@ -63,6 +63,14 @@ elif(app_mode=="About"):
 elif(app_mode=="Disease Recognition"):
     st.header("Disease Recognition")
     test_image = st.file_uploader("Choose an Image:", type=['jpg', 'jpeg', 'png', 'webp'])
+
+    if test_image is not None:
+        # 5MB file size limit
+        MAX_FILE_SIZE = 5 * 1024 * 1024
+        if test_image.size > MAX_FILE_SIZE:
+            st.error("The uploaded file is too large. Please upload an image smaller than 5MB.")
+            st.stop()
+
     if(st.button("Show Image", disabled=(test_image is None))):
         if test_image is not None:
             st.image(test_image,use_container_width=True)
