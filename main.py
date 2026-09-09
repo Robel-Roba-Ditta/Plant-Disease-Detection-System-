@@ -2,10 +2,11 @@ import logging
 import streamlit as st
 import tensorflow as tf
 import numpy as np
+from streamlit.runtime.uploaded_file_manager import UploadedFile
 
 
 #Tensorflow Model Prediction
-def model_prediction(test_image: str) -> int:
+def model_prediction(test_image: UploadedFile) -> int:
     model = tf.keras.models.load_model("trained_plant_disease_model.keras")
     image = tf.keras.utils.load_img(test_image,target_size=(128,128))
     input_arr = tf.keras.utils.img_to_array(image)
